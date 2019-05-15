@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.narcissux.blog.mapper.ArticleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.narcissux.blog.model.entity.Article">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="summary" property="summary"/>
+        <result column="content" property="content"/>
+        <result column="user_id" property="userId"/>
+        <result column="nickname" property="nickname"/>
+        <result column="comment_num" property="commentNum"/>
+        <result column="view_num" property="viewNum"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="ArticleVo" type="com.narcissux.blog.model.vo.ArticleVo" extends="BaseResultMap">
+        <association property="category" javaType="com.narcissux.blog.model.entity.Category">
+            <id column="category_id" property="id"/>
+            <result column="category_name" property="name"/>
+            <result column="category_avatar" property="avatar"/>
+        </association>
+        <collection property="tags" ofType="com.narcissux.blog.model.entity.Tag">
+            <id column="tag_id" property="id"/>
+            <result column="tag_name" property="name"/>
+            <result column="tag_avatar" property="avatar"/>
+        </collection>
+    </resultMap>
+
+    <!--四表外连接查询 -->
+    <select id="queryArticleByWrepper" resultType="com.narcissux.blog.model.vo.ArticleVo" resultMap="ArticleVo">
+        select t1.*,t2.name category_name,t2.avatar category_avatar,t4.id tag_id,t4.name tag_name,t4.avatar tag_avatar
+        from (((article t1 left join category t2 on t1.category_id = t2.id) left join article_tag t3 on t1.id = t3.article_id)
+        left join tag t4 on t4.id = t3.tag_id)
+        <if test="ew.sqlSegment != null">
+            and ${ew.sqlSegment}
+        </if>
+    </select>
+
+    <!--四表外连接查询 -->
+    <select id="queryArticleList" resultType="com.narcissux.blog.model.vo.ArticleVo" resultMap="ArticleVo">
+        select t1.*,t2.name category_name,t2.avatar category_avatar,t4.id tag_id,t4.name tag_name,t4.avatar tag_avatar
+        from (((article t1 left join category t2 on t1.category_id = t2.id) left join article_tag t3 on t1.id = t3.article_id)
+        left join tag t4 on t4.id = t3.tag_id)
+        <if test="ew.sqlSegment != null">
+            where ${ew.sqlSegment}
+        </if>
+    </select>
+
+
+
+
+</mapper>

@@ -1,0 +1,42 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.narcissux.blog.config.SwaggerConfig",
+      "name": "swagger",
+      "type": "com.narcissux.blog.config.SwaggerConfig"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.narcissux.blog.config.SwaggerConfig",
+      "name": "swagger.description",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.narcissux.blog.config.SwaggerConfig",
+      "name": "swagger.email",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.narcissux.blog.config.SwaggerConfig",
+      "name": "swagger.name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.narcissux.blog.config.SwaggerConfig",
+      "name": "swagger.title",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.narcissux.blog.config.SwaggerConfig",
+      "name": "swagger.url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.narcissux.blog.config.SwaggerConfig",
+      "name": "swagger.version",
+      "type": "java.lang.String"
+    }
+  ]
+}

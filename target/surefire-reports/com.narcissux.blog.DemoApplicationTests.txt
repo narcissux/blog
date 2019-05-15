@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.narcissux.blog.DemoApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 7.092 s <<< FAILURE! - in com.narcissux.blog.DemoApplicationTests
+testHome(com.narcissux.blog.DemoApplicationTests)  Time elapsed: 0.368 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<404>
+	at com.narcissux.blog.DemoApplicationTests.testHome(DemoApplicationTests.java:38)
+
