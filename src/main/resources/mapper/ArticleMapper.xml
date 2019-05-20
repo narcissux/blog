@@ -33,7 +33,7 @@
     <!--四表外连接查询 -->
     <select id="queryArticleByWrepper" resultType="com.narcissux.blog.model.vo.ArticleVo" resultMap="ArticleVo">
         select t1.*,t2.name category_name,t2.avatar category_avatar,t4.id tag_id,t4.name tag_name,t4.avatar tag_avatar
-        from (((article t1 left join category t2 on t1.category_id = t2.id) left join article_tag t3 on t1.id = t3.article_id)
+        from ((((select * from article order by id LIMIT #{start},#{size}) t1 left join category t2 on t1.category_id = t2.id) left join article_tag t3 on t1.id = t3.article_id)
         left join tag t4 on t4.id = t3.tag_id)
         <if test="ew.sqlSegment != null">
             and ${ew.sqlSegment}
@@ -50,7 +50,37 @@
         </if>
     </select>
 
+    <!-- 嵌套查询-->
+    <resultMap id="ArticleVo1" type="com.narcissux.blog.model.vo.ArticleVo" extends="BaseResultMap">
+        <association property="category" javaType="com.narcissux.blog.model.entity.Category" select="queryCategory" column="category_id">
+        </association>
+        <collection property="tags" ofType="com.narcissux.blog.model.entity.Tag" select="queryArticleTag" column="id">
+        </collection>
+    </resultMap>
 
+    <resultMap id="Category" type="com.narcissux.blog.model.entity.Category">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="avatar" property="avatar"/>
+    </resultMap>
 
+    <resultMap id="Tag" type="com.narcissux.blog.model.entity.Tag">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="avatar" property="avatar"/>
+    </resultMap>
+
+    <select id="queryArticleList2" resultType="com.narcissux.blog.model.vo.ArticleVo" resultMap="ArticleVo1">
+        select * from article order by id
+    </select>
+
+    <select id="queryCategory"  resultMap="Category">
+        select * from Category where id = #{category_id}
+    </select>
+
+    <select id="queryArticleTag"  resultMap="Tag">
+        select t2.id,t2.name,t2.avatar from article_tag t1 left join tag t2 on t1.tag_id = t2.id where article_id = #{id}
+    </select>
+    <!-- 嵌套查询-->
 
 </mapper>

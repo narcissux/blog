@@ -51,8 +51,10 @@ public class ArticleController {
     @ApiImplicitParam(name="params",value="参数",required = false)
     @GetMapping("/list")
     public R list(@RequestParam Map<String, Object> params) {
-        List<ArticleVo> list = articleService.queryPage(params);
-        return R.ok(JSON.parseArray(JSON.toJSONString(list)));
+        Map<String,Object> map = articleService.queryPage(params);
+        R r = R.ok(JSON.parseArray(JSON.toJSONString(map.get("data"))));
+        r.put("total",map.get("total"));
+        return r;
     }
 
     /**
@@ -85,7 +87,7 @@ public class ArticleController {
         //String token = (String) SecurityUtils.getSubject().getPrincipal();
         User user  = new User();
         //user.setId(JwtUtils.getJson(token).getInteger("uid"));
-        user.setId(json.getInteger("id"));
+        user.setId(json.getInteger("userId"));
         Integer id = articleService.addArticle(user,json);
         return R.ok(id);
     }

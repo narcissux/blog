@@ -26,11 +26,17 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * 条件查询分页列表
      * @return
      */
-    public IPage<ArticleVo> queryArticleByWrepper(Page<ArticleVo> page, @Param("ew") Wrapper<ArticleVo> wrapper);
+    public List<ArticleVo> queryArticleByWrepper(int start ,int size, @Param("ew") Wrapper<ArticleVo> wrapper);
 
     /**
      * 条件查询
      * @return
      */
     public List<ArticleVo> queryArticleList(@Param("ew") Wrapper<ArticleVo> wrapper);
+
+    /**
+     * 嵌套多表分页查询 / 暂时废弃，因为使用数据库连接使用多次
+     * @return
+     */
+    public IPage<ArticleVo> queryArticleList2(Page<ArticleVo> page);
 }

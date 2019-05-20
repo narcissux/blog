@@ -54,5 +54,5 @@ public interface ArticleService extends IService<Article> {
      * @param params
      * @return
      */
-    List<ArticleVo> queryPage(Map<String, Object> params);
+    Map<String,Object> queryPage(Map<String, Object> params);
 }

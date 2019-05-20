@@ -1,6 +1,9 @@
 package com.narcissux.blog;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.narcissux.blog.common.utils.Query;
+import com.narcissux.blog.component.R;
 import com.narcissux.blog.controller.ArticleController;
 import com.narcissux.blog.mapper.ArticleMapper;
 import com.narcissux.blog.mapper.TagMapper;
@@ -9,6 +12,7 @@ import com.narcissux.blog.model.entity.User;
 import com.narcissux.blog.model.vo.ArticleVo;
 import com.narcissux.blog.service.ArticleService;
 import com.narcissux.blog.service.UserService;
+import com.narcissux.blog.service.impl.ArticleServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,14 +37,30 @@ public class TestMybatis {
     UserService service;
 
     @Autowired
-    ArticleMapper articleMapper;
-
-    @Autowired
     ArticleService articleService;
 
     @Autowired
     ArticleController articleController;
 
+    @Autowired
+    ArticleMapper articleMapper;
+
+    @Test
+    public void selectArticlePage() {
+        IPage<ArticleVo> page = articleMapper.queryArticleList2(new Page<ArticleVo>());
+        System.out.println(page.getRecords());
+    }
+
+    @Test
+    public void selectArticlePage2() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("page",0);
+        R r = articleController.list(map);
+        System.out.println(r);
+    }
+/**
+ *
+ *
     @Test
     public void selectUserByPrimaryKey() {
         User user = new User();
@@ -72,10 +92,7 @@ public class TestMybatis {
         System.out.println(articleService.queryPage(params));
     }
 
-    /**
-     * 测试接口
-     *
-     */
+
     @Test
     public void selectArticleByWrepper(){
         Map params = new HashMap<String,Object>();
@@ -91,4 +108,5 @@ public class TestMybatis {
         params.put("order","ascs");
         System.out.println(articleService.getArticleAndAddViewNum(2L));
     }
+    **/
 }

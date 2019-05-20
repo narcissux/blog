@@ -56,7 +56,6 @@ public class JwtTest {
         }
     }
 
-
     @Test
     public void generateWithExpire(){
         System.out.println(JwtUtils.generateToken(1008,1000*60*60*24*365*10L));

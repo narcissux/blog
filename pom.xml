@@ -157,9 +157,11 @@
     </dependencies>
 
 
-    <!-- 将应用打包成一个jar包 -->
+
     <build>
         <plugins>
+
+            <!-- 将应用打包成一个jar包 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

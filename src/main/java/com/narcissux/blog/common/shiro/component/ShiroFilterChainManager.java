@@ -38,7 +38,8 @@ public class ShiroFilterChainManager {
         filterMap.put("/webjars/springfox-swagger-ui/**", "anon");
         filterMap.put("/captcha", "anon");
         filterMap.put("/register", "anon");
-        filterMap.put("/article==POST", "jwt");
+        filterMap.put("/article==DELETE", "jwt");
+        filterMap.put("/article==PATCH", "jwt");
         filterMap.put("/article/**", "anon");
         filterMap.put("/tags/**", "anon");
         filterMap.put("/category/**", "anon");

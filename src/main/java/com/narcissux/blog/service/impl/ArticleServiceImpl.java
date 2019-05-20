@@ -144,9 +144,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Integer id = this.baseMapper.insert(article);
         // 保存标签
         JSONArray tags = json.getJSONArray("tags");
-        Integer articleId = article.getId();
-        articleTagService.saveBatch(generateArticleTag(tags, articleId));
-        return articleId;
+
+        if (!CollectionUtils.isEmpty(tags)) {
+            articleTagService.saveBatch(generateArticleTag(tags, article.getId()));
+        }
+
+        return article.getId();
     }
 
     @Override
@@ -169,7 +172,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @return
      */
     @Override
-    public List<ArticleVo> queryPage(Map<String, Object> params) {
+    public Map<String, Object> queryPage(Map<String, Object> params) {
         QueryWrapper<ArticleVo> entityWrapper = new QueryWrapper<>();
         String categoryIdStr = (String) params.get("categoryId");
         if (StringUtils.isNotBlank(categoryIdStr)) {
@@ -183,8 +186,31 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             entityWrapper.eq("year(t1.create_time)", year);
             entityWrapper.eq("month(t1.create_time)", month);
         }
-        IPage<ArticleVo> page = baseMapper.queryArticleByWrepper(new Page<ArticleVo>(), entityWrapper);
-        return page.getRecords();
+        String s = (String) params.get("month");
+        int page;
+        int size;
+        try{
+            page = Integer.parseInt((String) params.get("page"));
+            size = Integer.parseInt((String)params.get("size"));
+            // 启用默认参数
+            if (page < 0)
+            {
+                page = 0;
+            }
+            if (size < 1 || size > 300)
+            {
+                size = 10;
+            }
+        }catch (Exception e)
+        {
+            throw new RestException("分页参数错误:"+e.getMessage());
+        }
+        int count = baseMapper.selectCount(new QueryWrapper<Article>());
+        List<ArticleVo> articleVo = baseMapper.queryArticleByWrepper(size * (page - 1), size, entityWrapper);
+        Map map = new HashMap();
+        map.put("total",count);
+        map.put("data",articleVo);
+        return map;
     }
 
     /**
@@ -214,6 +240,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      */
     @Transactional
     public List<ArticleTag> generateArticleTag(JSONArray tagArray, Integer articleId) {
+        // 判断空值
+        if (CollectionUtils.isEmpty(tagArray)){
+            return null;
+        }
         // 去除重复元素
         Set<Object> tags = new HashSet<>();
         tags.addAll(tagArray);
