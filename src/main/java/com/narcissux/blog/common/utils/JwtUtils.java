@@ -32,6 +32,7 @@ public class JwtUtils {
     //加载jwt.jks文件
     private static InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("jwt.jks");
     private static Key privateKey = null;
+
     private static Key publicKey = null;
     private static final long EXPIRE = 30 * 60 * 1000; //30分钟超时
     private static final String UID = "uid";

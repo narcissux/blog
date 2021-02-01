@@ -2,29 +2,18 @@ package com.narcissux.blog.controller;
 
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.narcissux.blog.common.shiro.JWTFilter;
-import com.narcissux.blog.common.utils.JwtUtils;
 import com.narcissux.blog.component.R;
-import com.narcissux.blog.model.entity.Article;
 import com.narcissux.blog.model.entity.User;
 import com.narcissux.blog.model.vo.ArticleVo;
 import com.narcissux.blog.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.stereotype.Controller;
-
-import javax.security.auth.Subject;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +21,7 @@ import java.util.Map;
  *  前端控制器
  * </p>
  *
- * @author yux
+ * @author xiaye
  * @since 2019-04-30
  */
 @Api("文章|模块")

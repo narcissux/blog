@@ -8,6 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collections;
+import java.util.HashSet;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RedisTest {
@@ -28,6 +31,11 @@ public class RedisTest {
     @Test
     public void get(){
         System.out.println(redis.opsForValue().get("xia"));
+    }
+
+    @Test
+    public void sett(){
+        Collections.synchronizedSet(new HashSet<>());
     }
 
 
