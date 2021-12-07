@@ -13,11 +13,10 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         //本应用的所有方法都会去处理跨域请求
         registry.addMapping("/**")
-                //允许远端访问的域名
-                .allowedOrigins("http://121.4.121.166:8080")
-                //允许请求的方法("POST", "GET", "PUT", "OPTIONS", "DELETE")
-                .allowedMethods("*")
-                //允许请求头
-                .allowedHeaders("*");
+                .allowedOrigins("*")
+                .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
+                .allowCredentials(true)
+                .allowedHeaders("*")
+                .maxAge(3600);
     }
 }
